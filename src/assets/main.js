@@ -58,7 +58,7 @@
       const dur = 1200;
       const tick = (now) => {
         const p = Math.min((now - start) / dur, 1);
-        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+        el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString("en");
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);

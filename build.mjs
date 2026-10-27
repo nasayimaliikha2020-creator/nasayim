@@ -207,7 +207,7 @@ const pageHead = (eyebrow, title, lead, extra = '') => `<section class="page-hea
 
 // ---------- reusable blocks ----------
 const statsBlock = (lang, dark = true) => `<ul class="stats ${dark ? 'stats-dark' : ''}">${stats.map((s) => `<li>
-  <a href="${u(lang, `programs/${s.program}/`)}"><span class="num"><span data-count="${s.value}">${s.value}</span>+</span><span class="lbl">${s[lang]}</span></a></li>`).join('')}</ul>`;
+  <a href="${u(lang, `programs/${s.program}/`)}"><span class="num"><span data-count="${s.value}">${s.value.toLocaleString("en")}</span>+</span><span class="lbl">${s[lang]}</span></a></li>`).join('')}</ul>`;
 
 const programCard = (lang, p, big = false) => {
   const s = p.stat && statById[p.stat];
@@ -218,7 +218,7 @@ const programCard = (lang, p, big = false) => {
   <h3><a href="${u(lang, `programs/${p.slug}/`)}" class="stretch">${p.title[lang]}</a></h3>
   <p class="tag">${p.tagline[lang]}</p>
   ${big ? `<p>${p.summary[lang]}</p>` : ''}
-  <div class="pcard-foot">${s ? `<span class="pstat"><b>${s.value}+</b> ${s[lang]}</span>` : '<span></span>'}<span class="more">${t[lang].learnMore} ${icon('arrow')}</span></div>
+  <div class="pcard-foot">${s ? `<span class="pstat"><b>${s.value.toLocaleString("en")}+</b> ${s[lang]}</span>` : '<span></span>'}<span class="more">${t[lang].learnMore} ${icon('arrow')}</span></div>
 </article>`;
 };
 
@@ -410,7 +410,7 @@ ${p.images.length ? `<div class="container page-photo">${img(p.images[0], lang, 
     ${p.images.length > 1 ? `<h2>${lang === 'ar' ? 'من الميدان' : 'From the field'}</h2>${galleryStrip(lang, p.images.slice(1))}` : ''}
   </div>
   <aside class="side">
-    ${s ? `<div class="side-stat"><p class="eyebrow">${G.impact}</p><span class="num"><span data-count="${s.value}">${s.value}</span>+</span><span class="lbl">${s[lang]}</span></div>` : ''}
+    ${s ? `<div class="side-stat"><p class="eyebrow">${G.impact}</p><span class="num"><span data-count="${s.value}">${s.value.toLocaleString("en")}</span>+</span><span class="lbl">${s[lang]}</span></div>` : ''}
     <div class="side-cta"><h2>${G.support}</h2><p>${G.supportT}</p>
       <a class="btn btn-accent btn-block" href="${u(lang, 'contact/')}">${L.cta.contribute}</a>
       <a class="btn btn-outline btn-block" href="${waLink(lang)}" ${ext}>${icon('chat')} ${L.cta.waLong}</a></div>
@@ -451,7 +451,7 @@ function impact(lang) {
 <section class="section"><div class="container">
   <h2 class="sec-title">${I.byProgram}</h2>
   <ul class="impact-list">${stats.map((s) => { const p = programs.find((x) => x.slug === s.program); return `<li>
-    <span class="num">${s.value}+</span><div><h3><a href="${u(lang, `programs/${p.slug}/`)}">${p.title[lang]}</a></h3><p>${s[lang]} — ${p.tagline[lang]}</p></div></li>`; }).join('')}</ul>
+    <span class="num">${s.value.toLocaleString("en")}+</span><div><h3><a href="${u(lang, `programs/${p.slug}/`)}">${p.title[lang]}</a></h3><p>${s[lang]} — ${p.tagline[lang]}</p></div></li>`; }).join('')}</ul>
 </div></section>
 <section class="section values-sec"><div class="container">
   <h2 class="sec-title">${I.how}</h2>

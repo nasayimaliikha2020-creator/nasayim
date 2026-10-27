@@ -35,6 +35,7 @@ export const stats = [
   { id: 'families', value: 530, program: 'food-support', ar: 'أسرة مستفيدة من برنامج إطعام الطعام', en: 'Families supported through the food program' },
   { id: 'medical', value: 150, program: 'shifaa-wa-amal', ar: 'عملية وحالة علاجية', en: 'Operations and medical cases supported' },
   { id: 'homes', value: 70, program: 'safe-home', ar: 'منزلًا تم ترميمه', en: 'Homes renovated' },
+  { id: 'distress', value: 10000, program: 'relieving-distress', ar: 'عائلة مستفيدة من برنامج تفريج الكربات', en: 'Families supported through Relieving Hardship' },
 ];
 
 export const waLink = (lang) =>

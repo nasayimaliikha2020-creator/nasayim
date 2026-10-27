@@ -84,7 +84,7 @@ export const programs = [
   {
     slug: 'relieving-distress',
     icon: 'handshake',
-    stat: null,
+    stat: 'distress',
     title: { ar: 'تفريج الكربات وزرع البسمات', en: 'Relieving Hardship, Restoring Smiles' },
     tagline: { ar: 'حين تضيق السبل... نفتح معًا نافذة للأمل.', en: 'When every door seems closed, together we open a window of hope.' },
     summary: {
