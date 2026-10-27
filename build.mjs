@@ -3,7 +3,7 @@
 import { mkdirSync, writeFileSync, cpSync, rmSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { site, stats, waLink } from './src/data/site.mjs';
-import { programs, developmentProjects, facilities, gallery, photos } from './src/data/programs.mjs';
+import { programs, development as devData, facilities, photos } from './src/data/programs.mjs';
 const sizes = JSON.parse(readFileSync('src/data/image-sizes.json', 'utf8'));
 import { t } from './src/i18n.mjs';
 
@@ -18,13 +18,24 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const u = (lang, p = '') => `${BASE}${lang}/${p}`;
 const asset = (p) => `${BASE}${p}`;
 const ext = 'target="_blank" rel="noopener noreferrer"';
+// Photos that actually exist in public/images (the rest render as described placeholders).
+const hasPhoto = (key) => Boolean(sizes[key]) && existsSync(`public/images/${key}.webp`);
+const gallery = Object.keys(photos).filter((k) => hasPhoto(k) && photos[k][0] !== 'home');
 const hasGallery = gallery.length > 0;
+const heroVideo = existsSync('public/video/hero.mp4');
 
 // Responsive photo from the catalog (public/images/<key>.webp + <key>-sm.webp).
 const alt = (key, lang) => photos[key][lang === 'ar' ? 1 : 2];
 function img(key, lang, { cls = '', sizesAttr = '(min-width: 900px) 50vw, 100vw', eager = false, decorative = false } = {}) {
+  if (!hasPhoto(key)) return placeholder(key, lang, cls);
   const [w, h] = sizes[key];
   return `<img class="${cls}" src="${asset(`images/${key}.webp`)}" srcset="${asset(`images/${key}-sm.webp`)} 800w, ${asset(`images/${key}.webp`)} ${w}w" sizes="${sizesAttr}" width="${w}" height="${h}" alt="${decorative ? '' : esc(alt(key, lang))}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">`;
+}
+
+// Placeholder shown until a photo is supplied: says what the photo will be.
+function placeholder(key, lang, cls = '') {
+  const label = lang === 'ar' ? 'صورة قادمة' : 'Photo coming soon';
+  return `<div class="ph ${cls}" role="img" aria-label="${esc(alt(key, lang))}"><span class="ph-in">${icon('image')}<b>${label}</b><span>${esc(photos[key][lang === 'ar' ? 3 : 4])}</span></span></div>`;
 }
 
 // Lucide icons (ISC license), inlined.
@@ -48,6 +59,21 @@ const P = {
   menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
   x: '<path d="M18 6 6 18M6 6l12 12"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
+  image: '<rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>',
+  wheelchair: '<circle cx="16" cy="4" r="1"/><path d="m18 19 1-7-6 1"/><path d="m5 8 3-3 5.5 3-2.36 3.5"/><path d="M4.24 14.5a5 5 0 0 0 6.88 6"/><path d="M13.76 17.5a5 5 0 0 0-6.88-6"/>',
+  unlock: '<rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/>',
+  bolt: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  shirt: '<path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z"/>',
+  flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+  droplet: '<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
+  wrench: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  laptop: '<path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/>',
+  book: '<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+  moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>',
+  flag: '<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22v-7"/>',
+  star: '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
+  chev: '<path d="m15 18-6-6 6-6"/>',
   globe: '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/>',
 };
 const icon = (n, cls = '') => `<svg class="ic ${n === 'arrow' ? 'ic-dir ' : ''}${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${P[n]}</svg>`;
@@ -224,7 +250,9 @@ function home(lang) {
   const L = t[lang];
   const [first, ...rest] = programs;
   const body = `
-<section class="hero">
+<section class="hero hero-video">
+  ${heroVideo ? `<video class="hero-bg" autoplay muted loop playsinline preload="metadata" poster="${asset('video/hero-poster.webp')}" aria-hidden="true"><source src="${asset('video/hero.mp4')}" type="video/mp4"></video>` : ''}
+  <div class="hero-shade" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="badge">${icon('check')} ${L.licenseLine}</p>
@@ -236,7 +264,12 @@ function home(lang) {
       </div>
     </div>
     <div class="hero-art">
-      ${img('relief-3', lang, { cls: 'hero-photo', eager: true, sizesAttr: '(min-width: 900px) 45vw, 100vw' })}
+      <div class="slider" data-slider aria-roledescription="carousel" aria-label="${lang === 'ar' ? 'صور من أعمال الجمعية' : 'Photos from our work'}">
+        <div class="slides">${['slide-1', 'slide-2', 'slide-3', 'slide-4', 'slide-5'].map((k, i) => `<div class="slide${i ? '' : ' is-active'}" role="group" aria-roledescription="slide" aria-label="${i + 1} / 5"${i ? ' aria-hidden="true"' : ''}>${img(k, lang, { cls: 'hero-photo', eager: i === 0, sizesAttr: '(min-width: 900px) 45vw, 100vw' })}</div>`).join('')}</div>
+        <button type="button" class="sl-btn sl-prev" aria-label="${lang === 'ar' ? 'الصورة السابقة' : 'Previous photo'}">${icon('chev')}</button>
+        <button type="button" class="sl-btn sl-next" aria-label="${lang === 'ar' ? 'الصورة التالية' : 'Next photo'}">${icon('chev')}</button>
+        <div class="sl-dots">${[0, 1, 2, 3, 4].map((i) => `<button type="button" aria-label="${i + 1}"${i ? '' : ' aria-current="true"'}></button>`).join('')}</div>
+      </div>
       <span class="since">${L.since}</span>
     </div>
   </div>
@@ -284,8 +317,8 @@ function home(lang) {
 <section class="section field-sec">
   <div class="container">
     <div class="sec-row"><h2 class="sec-title">${lang === 'ar' ? 'من الميدان' : 'From the field'}</h2>
-      <a class="link-arrow" href="${u(lang, 'gallery/')}">${L.nav.gallery} ${icon('arrow')}</a></div>
-    <div class="mosaic">${['home-2', 'food-1', 'relief-4', 'health-1', 'relief-1'].map((k) => `<a href="${u(lang, `programs/${photos[k][0]}/`)}">${img(k, lang, { sizesAttr: '(min-width: 900px) 33vw, 50vw' })}</a>`).join('')}</div>
+      ${hasGallery ? `<a class="link-arrow" href="${u(lang, 'gallery/')}">${L.nav.gallery} ${icon('arrow')}</a>` : ''}</div>
+    <div class="mosaic">${['home-1', 'food-1', 'relief-1', 'health-1', 'orphans-1'].map((k) => `<a href="${u(lang, `programs/${photos[k][0]}/`)}">${img(k, lang, { sizesAttr: '(min-width: 900px) 33vw, 50vw' })}</a>`).join('')}</div>
   </div>
 </section>
 
@@ -299,8 +332,8 @@ function home(lang) {
 <section class="section fac-prev">
   <div class="container split">
     <div><p class="eyebrow">${L.nav.facilities}</p><h2>${L.fac.tagline}</h2><p>${L.fac.lead}</p>
-      <a class="link-arrow" href="${u(lang, 'facilities/')}">${lang === 'ar' ? 'استكشف عقارات ومرافق الجمعية' : 'Explore our properties & facilities'} ${icon('arrow')}</a></div>
-    <div class="fac-mini">${icon('building')}<div><strong>${facilities[0].title[lang]}</strong><span>${site.address[lang]}</span></div></div>
+      <a class="link-arrow" href="${u(lang, 'facilities/')}">${lang === 'ar' ? 'استكشف مواقعنا' : 'Explore our locations'} ${icon('arrow')}</a></div>
+    <ul class="fac-minis">${facilities.map((f) => `<li class="fac-mini">${icon('mapPin')}<div><strong>${f.title[lang]}</strong><span>${f.location[lang]}</span></div></li>`).join('')}</ul>
   </div>
 </section>
 
@@ -353,7 +386,7 @@ ${ctaBand(lang)}`;
   return page({ lang, key: 'programs', path: 'programs/', title: L.meta.programs[0], desc: L.meta.programs[1], body, crumbs: [[L.nav.programs, 'programs/']] });
 }
 
-const galItem = (key, lang) => `<button type="button" class="gal-item" data-cat="${photos[key][0]}" data-src="${asset(`images/${key}.webp`)}" data-caption="${esc(alt(key, lang))}">
+const galItem = (key, lang) => !hasPhoto(key) ? `<div class="gal-item gal-ph">${img(key, lang)}</div>` : `<button type="button" class="gal-item" data-cat="${photos[key][0]}" data-src="${asset(`images/${key}.webp`)}" data-caption="${esc(alt(key, lang))}">
     ${img(key, lang, { sizesAttr: '(min-width: 1000px) 33vw, (min-width: 600px) 50vw, 100vw' })}</button>`;
 function galleryStrip(lang, images) {
   if (!images.length) return '';
@@ -372,6 +405,8 @@ ${p.images.length ? `<div class="container page-photo">${img(p.images[0], lang, 
 <section class="section"><div class="container split split-wide">
   <div class="prose"><h2>${G.overview}</h2>${p.body[lang].map((x) => `<p>${x}</p>`).join('')}
     <h2>${G.activities}</h2><ul class="ticks">${p.activities[lang].map((a) => `<li>${icon('check')}<span>${a}</span></li>`).join('')}</ul>
+    ${p.projects ? `<h2>${lang === 'ar' ? 'مشاريع البرنامج' : 'Program projects'}</h2>
+    <ul class="projects">${p.projects.map((x) => `<li class="project">${img(x.image, lang, { cls: 'project-img', sizesAttr: '(min-width: 900px) 30vw, 100vw' })}<div class="project-body"><span class="project-ic">${icon(x.icon)}</span><h3>${x[lang][0]}</h3><p>${x[lang][1]}</p></div></li>`).join('')}</ul>` : ''}
     ${p.images.length > 1 ? `<h2>${lang === 'ar' ? 'من الميدان' : 'From the field'}</h2>${galleryStrip(lang, p.images.slice(1))}` : ''}
   </div>
   <aside class="side">
@@ -388,17 +423,18 @@ ${p.images.length ? `<div class="container page-photo">${img(p.images[0], lang, 
 }
 
 function development(lang) {
-  const L = t[lang], D = L.dev;
-  const pillarIcons = ['graduation', 'heartHand', 'sprout'];
-  const projects = developmentProjects.length ? `<section class="section"><div class="container"><h2 class="sec-title">${D.projects}</h2>
-    <div class="pgrid">${developmentProjects.map((p) => `<article class="pcard has-img">${p.images?.[0] ? `<div class="pcard-img">${img(p.images[0], lang, { decorative: true })}</div>` : ''}<span class="pcard-ic">${icon('sprout')}</span>
-      <h3><a class="stretch" href="${u(lang, `development/${p.slug}/`)}">${p.title[lang]}</a></h3><p class="tag">${p.tagline[lang]}</p><p>${p.summary[lang]}</p>
-      <div class="pcard-foot"><span></span><span class="more">${L.learnMore} ${icon('arrow')}</span></div></article>`).join('')}</div></div></section>` : '';
-  const body = `${pageHead(L.tracks.dev, D.title, D.lead, `<p class="tagline">${D.tagline}</p>`)}
+  const L = t[lang], D = L.dev, V = devData;
+  const body = `${pageHead(L.tracks.dev, lang === 'ar' ? 'البرامج التنموية' : 'Development Programs', V.intro[lang], `<p class="tagline">${D.tagline}</p>`)}
 <section class="section"><div class="container">
-  <ol class="pillars">${D.pillars.map(([h, d], i) => `<li>${icon(pillarIcons[i])}<h2>${h}</h2><p>${d}</p></li>`).join('')}</ol>
+  <nav class="dev-toc" aria-label="${lang === 'ar' ? 'البرامج التنموية' : 'Development programs'}"><ol>${V.programs.map((p) => `<li><a href="#${p.slug}">${icon(p.icon)}<span>${p.title[lang]}</span></a></li>`).join('')}</ol></nav>
+  <div class="dev-list">${V.programs.map((p, i) => `<article class="dev-item" id="${p.slug}">
+    <div class="dev-media">${img(p.image, lang, { sizesAttr: '(min-width: 900px) 45vw, 100vw' })}</div>
+    <div class="dev-body"><p class="dev-num">${String(i + 1).padStart(2, '0')}</p><h2>${p.title[lang]}</h2><p>${p.text[lang]}</p>
+      ${p.items ? `<ul class="ticks">${p.items[lang].map((a) => `<li>${icon('check')}<span>${a}</span></li>`).join('')}</ul>` : ''}
+      ${p.outro ? `<p>${p.outro[lang]}</p>` : ''}</div>
+  </article>`).join('')}</div>
 </div></section>
-${projects}
+<section class="section"><div class="container"><div class="vm-item dev-vision"><p class="eyebrow">${lang === 'ar' ? 'رؤيتنا في التنمية' : 'Our vision for development'}</p><blockquote>${V.vision[lang]}</blockquote></div></div></section>
 <section class="section"><div class="container split">
   <div><h2>${D.partnerTitle}</h2><p>${D.partnerT}</p></div>
   <div class="actions"><a class="btn btn-primary" href="${u(lang, 'contact/')}">${L.nav.contact}</a>
@@ -406,17 +442,6 @@ ${projects}
 </div></section>
 ${ctaBand(lang)}`;
   return page({ lang, key: 'development', path: 'development/', title: L.meta.development[0], desc: L.meta.development[1], body, crumbs: [[L.nav.development, 'development/']] });
-}
-
-function devProjectPage(lang, p) {
-  const L = t[lang];
-  const path = `development/${p.slug}/`;
-  const body = `${pageHead(L.tracks.dev, p.title[lang], p.tagline[lang])}
-${p.images?.length ? `<div class="container page-photo">${img(p.images[0], lang, { eager: true, sizesAttr: '(min-width: 1200px) 1150px, 100vw' })}</div>` : ''}
-<section class="section"><div class="container prose">${(p.body?.[lang] || []).map((x) => `<p>${x}</p>`).join('')}
-${p.activities ? `<ul class="ticks">${p.activities[lang].map((a) => `<li>${icon('check')}<span>${a}</span></li>`).join('')}</ul>` : ''}
-${galleryStrip(lang, (p.images || []).slice(1))}<p><a class="link-arrow" href="${u(lang, 'programs/relieving-distress/')}">${programs.find((x) => x.slug === 'relieving-distress').title[lang]} ${icon('arrow')}</a></p></div></section>${ctaBand(lang)}`;
-  return page({ lang, key: 'development', path, title: p.title[lang], desc: p.tagline[lang], body, crumbs: [[L.nav.development, 'development/'], [p.title[lang], path]] });
 }
 
 function impact(lang) {
@@ -440,11 +465,11 @@ function facilitiesPage(lang) {
   const L = t[lang], F = L.fac;
   const body = `${pageHead(F.tagline, F.title, F.lead)}
 <section class="section"><div class="container">
-  <div class="fac-list">${facilities.map((f) => `<article class="fac-card">
-    <span class="pcard-ic big">${icon(f.icon)}</span>
+  <div class="fac-list">${facilities.map((f) => `<article class="fac-card" id="${f.slug}">
+    <div class="fac-media">${img(f.image, lang, { sizesAttr: '(min-width: 800px) 40vw, 100vw' })}</div>
     <div><p class="eyebrow">${f.category[lang]}</p><h2>${f.title[lang]}</h2><p>${f.summary[lang]}</p>
-    <dl class="facts compact"><div><dt>${F.address}</dt><dd>${site.address[lang]}</dd></div></dl>
-    <div class="actions"><a class="btn btn-primary" href="${site.mapUrl}" ${ext}>${icon('mapPin')} ${F.directions}</a>
+    <dl class="facts compact"><div><dt>${F.address}</dt><dd>${f.location[lang]}</dd></div></dl>
+    <div class="actions"><a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(f.map)}" ${ext}>${icon('mapPin')} ${F.directions}</a>
     <a class="btn btn-outline" href="${u(lang, 'contact/')}">${L.nav.contact}</a></div></div>
   </article>`).join('')}</div>
 </div></section>
@@ -455,7 +480,7 @@ ${ctaBand(lang)}`;
 function galleryPage(lang) {
   const L = t[lang], G = L.gallery;
   const cats = [...new Set(gallery.map((k) => photos[k][0]))];
-  const catLabel = (c) => [...programs, ...developmentProjects].find((p) => p.slug === c)?.title[lang] || c;
+  const catLabel = (c) => [...programs, { slug: 'development', title: { ar: 'البرامج التنموية', en: 'Development Programs' } }, { slug: 'facilities', title: { ar: 'مواقع الجمعية', en: 'Our Locations' } }].find((p) => p.slug === c)?.title[lang] || c;
   const body = `${pageHead('', G.title, G.lead)}
 <section class="section"><div class="container">
   <div class="filters" role="group" aria-label="${G.title}"><button type="button" aria-pressed="true" data-filter="*">${G.all}</button>
@@ -544,7 +569,6 @@ for (const lang of LANGS) {
   write(`${lang}/programs/index.html`, programsIndex(lang));
   for (const p of programs) write(`${lang}/programs/${p.slug}/index.html`, programPage(lang, p));
   write(`${lang}/development/index.html`, development(lang));
-  for (const p of developmentProjects) write(`${lang}/development/${p.slug}/index.html`, devProjectPage(lang, p));
   write(`${lang}/impact/index.html`, impact(lang));
   write(`${lang}/facilities/index.html`, facilitiesPage(lang));
   if (hasGallery) write(`${lang}/gallery/index.html`, galleryPage(lang));

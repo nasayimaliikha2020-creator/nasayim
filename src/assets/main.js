@@ -23,6 +23,31 @@
     window.matchMedia('(min-width: 1081px)').addEventListener('change', (m) => { if (m.matches) set(false); });
   }
 
+  // Hero: background video respects reduced motion; photo slider
+  const bg = document.querySelector('.hero-bg');
+  if (bg && reduce) { bg.removeAttribute('autoplay'); bg.pause(); }
+  const slider = document.querySelector('[data-slider]');
+  if (slider) {
+    const slides = [...slider.querySelectorAll('.slide')];
+    const dots = [...slider.querySelectorAll('.sl-dots button')];
+    let cur = 0;
+    let timer = null;
+    const go = (n) => {
+      cur = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => { s.classList.toggle('is-active', i === cur); s.setAttribute('aria-hidden', String(i !== cur)); });
+      dots.forEach((d, i) => d.toggleAttribute('aria-current', i === cur));
+    };
+    const stop = () => { clearInterval(timer); timer = null; };
+    const start = () => { if (!reduce && !timer) timer = setInterval(() => go(cur + 1), 5000); };
+    slider.querySelector('.sl-prev').addEventListener('click', () => { go(cur - 1); stop(); });
+    slider.querySelector('.sl-next').addEventListener('click', () => { go(cur + 1); stop(); });
+    dots.forEach((d, i) => d.addEventListener('click', () => { go(i); stop(); }));
+    slider.addEventListener('mouseenter', stop);
+    slider.addEventListener('mouseleave', start);
+    slider.addEventListener('focusin', stop);
+    start();
+  }
+
   // Counters and reveal
   const counters = document.querySelectorAll('[data-count]');
   const revealEls = document.querySelectorAll('.section h2, .pcard, .track, .values li, .steps li, .pillars li, .ways li');
