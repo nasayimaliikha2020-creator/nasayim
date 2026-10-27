@@ -469,7 +469,7 @@ function facilitiesPage(lang) {
     <div class="fac-media">${img(f.image, lang, { sizesAttr: '(min-width: 800px) 40vw, 100vw' })}</div>
     <div><p class="eyebrow">${f.category[lang]}</p><h2>${f.title[lang]}</h2><p>${f.summary[lang]}</p>
     <dl class="facts compact"><div><dt>${F.address}</dt><dd>${f.location[lang]}</dd></div></dl>
-    <div class="actions"><a class="btn btn-primary" href="https://www.google.com/maps/search/?api=1&amp;query=${encodeURIComponent(f.map)}" ${ext}>${icon('mapPin')} ${F.directions}</a>
+    <div class="actions"><a class="btn btn-primary" href="${esc(f.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.map)}`)}" ${ext}>${icon('mapPin')} ${F.directions}</a>
     <a class="btn btn-outline" href="${u(lang, 'contact/')}">${L.nav.contact}</a></div></div>
   </article>`).join('')}</div>
 </div></section>

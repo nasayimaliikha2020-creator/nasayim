@@ -231,16 +231,16 @@ export const facilities = [
     map: 'مدارس الأخلاء التربوية حسبان الأردن' },
   { slug: 'kuwait-al-ataa', icon: 'building', image: 'loc-irbid',
     title: { ar: 'مركز كويت العطاء (مركز محمد المريخي)', en: 'Kuwait Al-Ataa Center (Mohammed Al-Muraikhi Center)' },
-    category: { ar: 'مركز تابع للجمعية', en: 'Association center' },
+    category: { ar: 'مركز تنموي', en: 'Development center' },
     location: { ar: 'محافظة إربد', en: 'Irbid Governorate' },
-    summary: { ar: 'مركز تابع للجمعية في محافظة إربد، يحتضن برامجها وأنشطتها في خدمة الأيتام والأسر وأبناء المجتمع المحلي.', en: 'An association center in Irbid Governorate that hosts its programs and activities serving orphans, families and the local community.' },
-    map: 'مركز كويت العطاء إربد الأردن' },
+    summary: { ar: 'أحد المركزين التنمويين للجمعية في محافظة إربد، يقدّم البرامج التدريبية والتعليمية والتربوية للأيتام والأسر المحتاجة وأبناء المجتمع المحلي.', en: 'One of the association’s two development centers, in Irbid Governorate, offering training, educational and personal-development programs for orphans, families in need and the local community.' },
+    mapUrl: 'https://maps.app.goo.gl/YCDfawCLRb1wnnhx6' },
   { slug: 'adnan-al-roumi', icon: 'building', image: 'loc-sahab',
     title: { ar: 'مركز عدنان الرومي', en: 'Adnan Al-Roumi Center' },
-    category: { ar: 'مركز تابع للجمعية', en: 'Association center' },
+    category: { ar: 'مركز تنموي', en: 'Development center' },
     location: { ar: 'منطقة سحاب', en: 'Sahab' },
-    summary: { ar: 'مركز تابع للجمعية في منطقة سحاب، يحتضن برامجها وأنشطتها في خدمة الأيتام والأسر وأبناء المجتمع المحلي.', en: 'An association center in Sahab that hosts its programs and activities serving orphans, families and the local community.' },
-    map: 'مركز عدنان الرومي سحاب الأردن' },
+    summary: { ar: 'أحد المركزين التنمويين للجمعية في منطقة سحاب، يقدّم البرامج التدريبية والتعليمية والتربوية للأيتام والأسر المحتاجة وأبناء المجتمع المحلي.', en: 'One of the association’s two development centers, in Sahab, offering training, educational and personal-development programs for orphans, families in need and the local community.' },
+    mapUrl: 'https://www.google.com/maps?q=31.8906914,36.027885&z=17' },
 ];
 
 // Photo slots: key → [category, alt ar, alt en, what the photo should show (ar), (en)].

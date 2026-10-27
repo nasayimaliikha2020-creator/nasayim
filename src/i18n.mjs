@@ -77,7 +77,7 @@ export const t = {
     fac: {
       title: 'مواقعنا',
       tagline: 'مساحات لخدمة الإنسان والمجتمع',
-      lead: 'تنطلق أعمال الجمعية من مقرها الرئيسي في حسبان ومن مركزين في محافظة إربد ومنطقة سحاب، تحتضن برامجها الإغاثية والتنموية.',
+      lead: 'تنطلق أعمال الجمعية من مقرها الرئيسي في حسبان ومن مركزين تنمويين في محافظة إربد ومنطقة سحاب.',
       address: 'العنوان', directions: 'احصل على الاتجاهات',
     },
     gallery: { title: 'معرض الصور', lead: 'لقطات من أعمال الجمعية وبرامجها.', all: 'الكل', empty: 'لا توجد صور في هذا التصنيف حاليًا.', prev: 'السابق', next: 'التالي', more: 'عرض المزيد' },
@@ -206,7 +206,7 @@ export const t = {
     fac: {
       title: 'Our Locations',
       tagline: 'Spaces that serve people and community',
-      lead: 'The association works from its main office in Hisban and from two centers in Irbid Governorate and Sahab, which host its relief and development programs.',
+      lead: 'The association works from its main office in Hisban and from two development centers in Irbid Governorate and Sahab.',
       address: 'Address', directions: 'Get directions',
     },
     gallery: { title: 'Gallery', lead: 'Moments from the association’s work and programs.', all: 'All', empty: 'No photos in this category yet.', prev: 'Previous', next: 'Next', more: 'Load more' },
