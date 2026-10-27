@@ -318,7 +318,7 @@ function home(lang) {
   <div class="container">
     <div class="sec-row"><h2 class="sec-title">${lang === 'ar' ? 'من الميدان' : 'From the field'}</h2>
       ${hasGallery ? `<a class="link-arrow" href="${u(lang, 'gallery/')}">${L.nav.gallery} ${icon('arrow')}</a>` : ''}</div>
-    <div class="mosaic">${['home-1', 'food-1', 'relief-1', 'health-1', 'orphans-1'].map((k) => `<a href="${u(lang, `programs/${photos[k][0]}/`)}">${img(k, lang, { sizesAttr: '(min-width: 900px) 33vw, 50vw' })}</a>`).join('')}</div>
+    <div class="mosaic">${['house-2-after', 'food-7', 'dev-digital', 'health-2', 'orphans-2'].map((k) => `<a href="${u(lang, `${photos[k][0] === 'development' ? 'development/' : `programs/${photos[k][0]}/`}`)}">${img(k, lang, { sizesAttr: '(min-width: 900px) 33vw, 50vw' })}</a>`).join('')}</div>
   </div>
 </section>
 
@@ -407,6 +407,8 @@ ${p.images.length ? `<div class="container page-photo">${img(p.images[0], lang, 
     <h2>${G.activities}</h2><ul class="ticks">${p.activities[lang].map((a) => `<li>${icon('check')}<span>${a}</span></li>`).join('')}</ul>
     ${p.projects ? `<h2>${lang === 'ar' ? 'مشاريع البرنامج' : 'Program projects'}</h2>
     <ul class="projects">${p.projects.map((x) => `<li class="project">${x.image ? img(x.image, lang, { cls: 'project-img', sizesAttr: '(min-width: 900px) 30vw, 100vw' }) : ''}<div class="project-body"><span class="project-ic">${icon(x.icon)}</span><h3>${x[lang][0]}</h3><p>${x[lang][1]}</p></div></li>`).join('')}</ul>` : ''}
+    ${p.houses ? `<h2>${lang === 'ar' ? 'قبل الترميم وبعده' : 'Before and after'}</h2>
+    <ul class="ba-list">${p.houses.map((n) => `<li class="ba"><figure>${img(`house-${n}-before`, lang, { sizesAttr: '(min-width: 900px) 30vw, 50vw' })}<figcaption>${lang === 'ar' ? 'قبل' : 'Before'}</figcaption></figure><figure>${img(`house-${n}-after`, lang, { sizesAttr: '(min-width: 900px) 30vw, 50vw' })}<figcaption>${lang === 'ar' ? 'بعد' : 'After'}</figcaption></figure></li>`).join('')}</ul>` : ''}
     ${p.images.length > 1 ? `<h2>${lang === 'ar' ? 'من الميدان' : 'From the field'}</h2>${galleryStrip(lang, p.images.slice(1))}` : ''}
   </div>
   <aside class="side">

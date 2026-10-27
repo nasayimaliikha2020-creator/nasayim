@@ -496,3 +496,10 @@ body.menu-open .wa-float { display: none; }
 .fac-icon .ic { width: 64px; height: 64px; }
 .project-body:first-child .project-ic { position: static; margin-bottom: .5rem; }
 .project-body:first-child h3 { margin-top: 0; }
+/* Safe Home before/after */
+.ba-list { display: grid; gap: 1.25rem; margin-bottom: var(--sp-4); }
+.ba { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+.ba figure { margin: 0; position: relative; border-radius: var(--radius); overflow: hidden; background: var(--sand); }
+.ba img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.ba figcaption { position: absolute; top: .6rem; inset-inline-start: .6rem; padding: .2rem .7rem; border-radius: 999px; font-size: var(--fs-0); font-weight: 700; background: rgba(11, 47, 25, .8); color: #fff; }
+.ba figure:last-child figcaption { background: var(--orange); color: var(--green-900); }
