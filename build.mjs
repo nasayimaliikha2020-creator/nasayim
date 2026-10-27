@@ -406,7 +406,7 @@ ${p.images.length ? `<div class="container page-photo">${img(p.images[0], lang, 
   <div class="prose"><h2>${G.overview}</h2>${p.body[lang].map((x) => `<p>${x}</p>`).join('')}
     <h2>${G.activities}</h2><ul class="ticks">${p.activities[lang].map((a) => `<li>${icon('check')}<span>${a}</span></li>`).join('')}</ul>
     ${p.projects ? `<h2>${lang === 'ar' ? 'مشاريع البرنامج' : 'Program projects'}</h2>
-    <ul class="projects">${p.projects.map((x) => `<li class="project">${img(x.image, lang, { cls: 'project-img', sizesAttr: '(min-width: 900px) 30vw, 100vw' })}<div class="project-body"><span class="project-ic">${icon(x.icon)}</span><h3>${x[lang][0]}</h3><p>${x[lang][1]}</p></div></li>`).join('')}</ul>` : ''}
+    <ul class="projects">${p.projects.map((x) => `<li class="project">${x.image ? img(x.image, lang, { cls: 'project-img', sizesAttr: '(min-width: 900px) 30vw, 100vw' }) : ''}<div class="project-body"><span class="project-ic">${icon(x.icon)}</span><h3>${x[lang][0]}</h3><p>${x[lang][1]}</p></div></li>`).join('')}</ul>` : ''}
     ${p.images.length > 1 ? `<h2>${lang === 'ar' ? 'من الميدان' : 'From the field'}</h2>${galleryStrip(lang, p.images.slice(1))}` : ''}
   </div>
   <aside class="side">
@@ -466,7 +466,7 @@ function facilitiesPage(lang) {
   const body = `${pageHead(F.tagline, F.title, F.lead)}
 <section class="section"><div class="container">
   <div class="fac-list">${facilities.map((f) => `<article class="fac-card" id="${f.slug}">
-    <div class="fac-media">${img(f.image, lang, { sizesAttr: '(min-width: 800px) 40vw, 100vw' })}</div>
+    ${f.image ? `<div class="fac-media">${img(f.image, lang, { sizesAttr: '(min-width: 800px) 40vw, 100vw' })}</div>` : `<div class="fac-media fac-icon">${icon(f.icon)}</div>`}
     <div><p class="eyebrow">${f.category[lang]}</p><h2>${f.title[lang]}</h2><p>${f.summary[lang]}</p>
     <dl class="facts compact"><div><dt>${F.address}</dt><dd>${f.location[lang]}</dd></div></dl>
     <div class="actions"><a class="btn btn-primary" href="${esc(f.mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(f.map)}`)}" ${ext}>${icon('mapPin')} ${F.directions}</a>

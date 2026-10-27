@@ -492,3 +492,7 @@ body.menu-open .wa-float { display: none; }
 .fac-media img { width: 100%; height: 100%; object-fit: cover; }
 .fac-minis { display: grid; gap: .75rem; }
 @media (max-width: 899px) { .stats li:last-child:nth-child(odd) { grid-column: span 2; } }
+.fac-icon { display: grid; place-items: center; background: var(--green-50); color: var(--green); }
+.fac-icon .ic { width: 64px; height: 64px; }
+.project-body:first-child .project-ic { position: static; margin-bottom: .5rem; }
+.project-body:first-child h3 { margin-top: 0; }

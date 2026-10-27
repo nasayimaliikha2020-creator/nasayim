@@ -102,8 +102,8 @@ export const programs = [
       ],
     },
     activities: {
-      ar: ['الكراسي المتحركة', 'السداد عن الغارمين', 'تسديد الإيجارات المتراكمة', 'تسديد فواتير الكهرباء والماء', 'كسوة الشتاء وكسوة العيد', 'البطانيات والصوبات وجرات الغاز', 'خزانات المياه النظيفة', 'مساعدات إنسانية متنوعة'],
-      en: ['Wheelchairs', 'Relief for debtors', 'Overdue rent', 'Electricity and water bills', 'Winter and Eid clothing', 'Blankets, heaters and gas cylinders', 'Clean water tanks', 'Other humanitarian aid'],
+      ar: ['الكراسي المتحركة', 'السداد عن الغارمين', 'تسديد الإيجارات المتراكمة', 'تسديد فواتير الكهرباء والماء', 'كسوة الشتاء وكسوة العيد', 'البطانيات والصوبات وجرات الغاز', 'مساعدات إنسانية متنوعة'],
+      en: ['Wheelchairs', 'Relief for debtors', 'Overdue rent', 'Electricity and water bills', 'Winter and Eid clothing', 'Blankets, heaters and gas cylinders', 'Other humanitarian aid'],
     },
     // Projects shown as cards on the program page; `image` is a key in the photos catalog.
     projects: [
@@ -113,7 +113,7 @@ export const programs = [
       { icon: 'unlock', image: 'distress-debtors',
         ar: ['السداد عن الغارمين', 'نساند من أثقلتهم الديون وعجزوا عن سدادها، فنسهم في رفع هذا العبء عنهم وحماية أسرهم من تبعاته.'],
         en: ['Relief for Debtors', 'We stand with people burdened by debts they cannot repay, helping lift that weight and protect their families from its consequences.'] },
-      { icon: 'house', image: 'distress-rent',
+      { icon: 'house',
         ar: ['تسديد الإيجارات المتراكمة', 'نسدد الإيجارات المتراكمة عن الأسر المهددة بفقدان مسكنها، ليبقى للأسرة سقف يؤويها واستقرار تحتاجه.'],
         en: ['Overdue Rent', 'We settle overdue rent for families at risk of losing their homes, so they keep a roof over their heads and the stability they need.'] },
       { icon: 'bolt', image: 'distress-bills',
@@ -125,9 +125,6 @@ export const programs = [
       { icon: 'flame', image: 'distress-winter',
         ar: ['البطانيات والصوبات وجرات الغاز', 'نوزّع البطانيات ووسائل التدفئة وجرات الغاز على الأسر المحتاجة، لتواجه برد الشتاء بدفء وأمان.'],
         en: ['Blankets, Heaters & Gas Cylinders', 'We distribute blankets, heaters and gas cylinders to families in need, so they can face the winter cold in warmth and safety.'] },
-      { icon: 'droplet', image: 'distress-water',
-        ar: ['خزانات المياه النظيفة', 'نركّب خزانات المياه النظيفة للأسر التي تفتقر إلى مصدر آمن ومستقر للمياه، حفاظًا على صحتها وكرامة عيشها.'],
-        en: ['Clean Water Tanks', 'We install clean water tanks for families who lack a safe and reliable water supply, protecting their health and dignity.'] },
       { icon: 'handshake', image: 'distress-aid',
         ar: ['مساعدات إنسانية متنوعة', 'نستجيب للحالات الطارئة والاحتياجات المتجددة بمساعدات إنسانية متنوعة، بحسب ما تقتضيه كل حالة.'],
         en: ['Other Humanitarian Aid', 'We respond to emergencies and changing needs with a range of humanitarian assistance, tailored to each case.'] },
@@ -223,7 +220,7 @@ export const development = {
 
 // Association locations. Never include deeds, parcel numbers, prices or other legal/financial details.
 export const facilities = [
-  { slug: 'headquarters', icon: 'building', image: 'loc-hq',
+  { slug: 'headquarters', icon: 'building',
     title: { ar: 'المقر الرئيسي – حسبان', en: 'Main Office – Hisban' },
     category: { ar: 'المقر الرئيسي', en: 'Headquarters' },
     location: { ar: 'حسبان – مدارس الأخلاء التربوية – فرع حسبان', en: 'Hisban – Al-Akhilla Educational Schools, Hisban Branch' },
@@ -264,11 +261,9 @@ export const photos = {
   'relief-1': ['relieving-distress', 'من برنامج تفريج الكربات', 'From Relieving Hardship', 'صورة غلاف لبرنامج تفريج الكربات', 'Cover photo for Relieving Hardship'],
   'distress-wheelchairs': ['relieving-distress', 'كراسي متحركة مقدّمة ضمن برنامج تفريج الكربات', 'Wheelchairs provided, Relieving Hardship', 'تسليم كرسي متحرك لمستفيد', 'A wheelchair being handed over'],
   'distress-debtors': ['relieving-distress', 'السداد عن الغارمين', 'Relief for debtors', 'صورة معبّرة عن مشروع السداد عن الغارمين (دون إظهار وجوه أو وثائق)', 'A representative image for debt relief (no faces or documents)'],
-  'distress-rent': ['relieving-distress', 'تسديد الإيجارات المتراكمة', 'Overdue rent', 'صورة معبّرة عن تسديد الإيجارات (منزل أسرة)', 'A representative image for rent support (a family home)'],
   'distress-bills': ['relieving-distress', 'تسديد فواتير الكهرباء والماء', 'Electricity and water bills', 'صورة معبّرة عن تسديد الفواتير (دون إظهار بيانات شخصية)', 'A representative image for bill payment (no personal data)'],
   'distress-clothing': ['relieving-distress', 'كسوة الشتاء وكسوة العيد', 'Winter and Eid clothing', 'توزيع كسوة الشتاء أو العيد', 'Distribution of winter or Eid clothing'],
   'distress-winter': ['relieving-distress', 'توزيع البطانيات والصوبات وجرات الغاز', 'Blankets, heaters and gas cylinders', 'توزيع البطانيات والصوبات وجرات الغاز', 'Blankets, heaters and gas cylinders being distributed'],
-  'distress-water': ['relieving-distress', 'تركيب خزانات المياه النظيفة', 'Clean water tanks', 'خزان مياه بعد تركيبه', 'A newly installed water tank'],
   'distress-aid': ['relieving-distress', 'مساعدات إنسانية متنوعة', 'Other humanitarian aid', 'تقديم مساعدات إنسانية متنوعة', 'Humanitarian aid being delivered'],
   'orphans-1': ['orphan-care', 'من برنامج كفالة الأيتام', 'From Orphan Sponsorship', 'صورة غلاف لكفالة الأيتام', 'Cover photo for Orphan Sponsorship'],
   'orphans-2': ['orphan-care', 'من أنشطة كفالة الأيتام', 'Orphan Sponsorship activities', 'توزيع الحقائب المدرسية أو العيديات', 'School bags or Eid gifts being distributed'],
@@ -281,7 +276,6 @@ export const photos = {
   'dev-leaders': ['development', 'من برنامج إعداد القادة', 'Future Leaders Program', 'ورشة أو نشاط من برنامج إعداد القادة', 'A Future Leaders workshop or activity'],
   'dev-gifted': ['development', 'من برنامج رعاية الموهوبين', 'Gifted & Talented Program', 'مشاركة الموهوبين في مسابقة أو نشاط', 'Gifted students at a competition or activity'],
   'dev-community': ['development', 'من برامج تنمية المجتمع المحلي', 'Community development', 'دورة أو نشاط توعوي لأبناء المجتمع', 'A course or awareness session for the community'],
-  'loc-hq': ['facilities', 'المقر الرئيسي للجمعية في حسبان', 'The association’s main office in Hisban', 'صورة خارجية للمقر الرئيسي في حسبان', 'Exterior of the main office in Hisban'],
   'loc-irbid': ['facilities', 'مركز كويت العطاء في إربد', 'Kuwait Al-Ataa Center, Irbid', 'صورة لمركز كويت العطاء في إربد', 'Kuwait Al-Ataa Center, Irbid'],
   'loc-sahab': ['facilities', 'مركز عدنان الرومي في سحاب', 'Adnan Al-Roumi Center, Sahab', 'صورة لمركز عدنان الرومي في سحاب', 'Adnan Al-Roumi Center, Sahab'],
 };
