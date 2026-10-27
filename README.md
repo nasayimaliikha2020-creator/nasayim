@@ -1,7 +1,7 @@
 # Nasaem Al-Ekhaa Charity Association — Official Website
 
 Bilingual (Arabic RTL / English LTR) website for **جمعية نسائم الإخاء الخيرية**, published at
-**https://mohammedkellawi.github.io/nasayim/**.
+**https://nasayimaliikha2020-creator.github.io/nasayim/**.
 
 ## Stack
 
@@ -65,7 +65,7 @@ To activate it:
 
 1. Buy a domain from any registrar.
 2. Repository **Settings → Pages → Custom domain**: enter e.g. `www.example.org` and save.
-3. At the registrar, add DNS records. For `www`, add a `CNAME` pointing to `mohammedkellawi.github.io`. For the root domain, add `A` records to `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`.
+3. At the registrar, add DNS records. For `www`, add a `CNAME` pointing to `nasayimaliikha2020-creator.github.io`. For the root domain, add `A` records to `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and `185.199.111.153`.
 4. Once DNS has propagated, tick **Enforce HTTPS**.
 5. In `src/data/site.mjs`, set `url: 'https://www.example.org'` and `base: '/'`, then push. Every link updates automatically.
 

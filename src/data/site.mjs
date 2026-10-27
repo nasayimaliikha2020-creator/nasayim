@@ -2,7 +2,7 @@
 // Edit values here; every page reads from this file.
 
 export const site = {
-  url: 'https://mohammedkellawi.github.io',
+  url: 'https://nasayimaliikha2020-creator.github.io',
   base: '/nasayim/',
   name: { ar: 'جمعية نسائم الإخاء الخيرية', en: 'Nasaem Al-Ekhaa Charity Association' },
   shortName: { ar: 'نسائم الإخاء', en: 'Nasaem Al-Ekhaa' },
